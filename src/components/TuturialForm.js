@@ -1,18 +1,20 @@
 import React, {useState} from 'react';
 
 function TutorialForm(props) {
-  const {addOrEdit} = props;
+  const {addOrEditTutorial} = props;
 
-  const [values, setValues] = useState({
+  const initialStateValues = {
     url: '',
     tutorialName: '',
     author: ''
-  });
+  }
+
+  const [values, setValues] = useState(initialStateValues);
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log(values);
-    addOrEdit();
+    addOrEditTutorial(values);
+    setValues({...initialStateValues})
   }
 
   function handleInputChange(e) {
@@ -32,6 +34,7 @@ function TutorialForm(props) {
           placeholder='https://some-tutorial.com'
           name='url'
           onChange={handleInputChange}
+          value={values.url}
         />
       </div>
 
@@ -45,6 +48,7 @@ function TutorialForm(props) {
           placeholder='Tutorial name'
           name='tutorialName'
           onChange={handleInputChange}
+          value={values.tutorialName}
         />
       </div>
 
@@ -58,6 +62,7 @@ function TutorialForm(props) {
           placeholder='Author'
           name='author'
           onChange={handleInputChange}
+          value={values.author}
         />
       </div>
 
