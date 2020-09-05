@@ -16,12 +16,21 @@ function Tutorials() {
   }
 
   async function getTutorials() {
-    const docs = [];
-    const querySnapshot = await db.collection('tutorials').get();
-    querySnapshot.forEach(doc => {
-      docs.push({...doc.data(), id: doc.id});
+    // const docs = [];
+
+    // If you add new tutorials, new data is not updated
+    // const querySnapshot = await db.collection('tutorials').get();
+    // querySnapshot.forEach(doc => {
+    //   docs.push({...doc.data(), id: doc.id});
+    // });
+
+    db.collection('tutorials').onSnapshot(querySnapshot => {
+      const docs = [];
+      querySnapshot.forEach(doc => {
+        docs.push({...doc.data(), id: doc.id});
+      });
+      setTutorials(docs);
     });
-    setTutorials(docs);
   }
 
   useEffect(() => {
@@ -31,7 +40,19 @@ function Tutorials() {
   return (
     <div>
       <TutorialForm addOrEditTutorial={addOrEditTutorial} />
-      <h1>Tutorials</h1>
+      <div className="tutorials">
+        {tutorials.map(tutorial => {
+          return (
+          <div className='tutorial' key={tutorial.id}>
+            <h2>{tutorial.tutorialName}</h2>
+            <p>{tutorial.author}</p>
+            <a href={tutorial.url} target='_blank' rel="noopener noreferrer">
+              Go to the tutorial
+            </a>
+          </div>
+          );
+        })}
+      </div>
     </div>
   );
 }
