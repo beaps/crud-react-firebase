@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import {toast} from 'react-toastify';
 
 import TutorialForm from './TuturialForm';
 
@@ -12,7 +13,7 @@ function Tutorials() {
   async function addOrEditTutorial(tutorialObject) {
     console.log(tutorialObject)
     await db.collection('tutorials').doc().set(tutorialObject);
-    console.log('new task added');
+    toast('New tutorial added', {type: 'success'});
   }
 
   async function getTutorials() {
@@ -38,6 +39,7 @@ function Tutorials() {
     // Confirm you want to delete the tutorial
     if (window.confirm('Are you sure you want to delete this tutorial?')) {
       await db.collection('tutorials').doc(id).delete();
+      toast('Tutorial removed', {type: 'error', autoClose: 2000});
     }
   }
 
