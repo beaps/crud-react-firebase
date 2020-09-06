@@ -53,6 +53,7 @@ form {
   box-shadow: 0 2px 3px 2px hsl(230, 90%, 70%);
 }
 
-.form-btn-save:hover {
+.form-btn-save:hover,
+.form-btn-save:focus {
   background-color: rgb(131, 255, 131);
 }
