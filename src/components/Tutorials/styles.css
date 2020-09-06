@@ -1,0 +1,55 @@
+.tutorials {
+  background-color: #f7f7f7;
+  padding: 1rem;
+}
+
+.tutorial {
+  background-color: #eee;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 5px;
+  box-shadow: 0 1px 3px 1px #e5e5e5;
+}
+
+.tutorial:hover {
+  background-color: #e5e5e5;
+}
+
+.tutorial-icon-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.tutorial h2 {
+  font-size: 1.3rem;
+}
+
+.tutorial a {
+  text-decoration: none;
+  color: hsl(226, 100%, 70%);
+}
+
+.tutorial i {
+  background-color: #d8d8d8;
+  border-radius: 50%;
+  padding: 0.2rem;
+  font-size: 1.2rem;
+  box-shadow: 0 1px 3px 1px #e5e5e5;
+  cursor: pointer;
+}
+
+.delete {
+  margin-right: 0.3rem;
+}
+
+.delete:hover,
+.delete:focus {
+  background-color: tomato;
+  color: white;
+}
+
+.update:hover,
+.update:focus {
+  background-color: gold;
+  color: white;
+}

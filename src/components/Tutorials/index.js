@@ -71,14 +71,14 @@ function Tutorials() {
             <a href={tutorial.url} target='_blank' rel="noopener noreferrer">
               Go to the tutorial
             </a>
-            <div>
+            <div className="tutorial-icon-container">
               <i
-                className='material-icons'
+                className='material-icons delete'
                 onClick={() => onDeleteTutorial(tutorial.id)}>
                   close
               </i>
               <i
-                className='material-icons'
+                className='material-icons update'
                 onClick={() => setCurrentId(tutorial.id)}>
                   create
               </i>
