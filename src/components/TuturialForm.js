@@ -1,7 +1,9 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
+
+import {db} from '../firebase';
 
 function TutorialForm(props) {
-  const {addOrEditTutorial} = props;
+  const {addOrEditTutorial, currentId, tutorials} = props;
 
   const initialStateValues = {
     url: '',
@@ -14,13 +16,26 @@ function TutorialForm(props) {
   function handleSubmit(e) {
     e.preventDefault();
     addOrEditTutorial(values);
-    setValues({...initialStateValues})
+    setValues({...initialStateValues});
   }
 
   function handleInputChange(e) {
     const {name, value} = e.target
-    setValues({...values, [name]: value})
+    setValues({...values, [name]: value});
   }
+
+  async function getTutorialById(id) {
+    const doc = await db.collection('tutorials').doc(id).get();
+    setValues(doc.data());
+  }
+
+  useEffect(() => {
+    if (currentId === '') {
+      setValues({...initialStateValues});
+    } else {
+      getTutorialById(currentId);
+    }
+  }, [currentId]);
 
   return (
     <form onSubmit={handleSubmit}>
@@ -67,7 +82,7 @@ function TutorialForm(props) {
       </div>
 
       <button className='form-btn-save'>
-        Save
+        {currentId === '' ? 'Save' : 'Update'}
       </button>
     </form>
   );

@@ -9,11 +9,17 @@ import {db} from '../firebase';
 function Tutorials() {
 
   const [tutorials, setTutorials] = useState([]);
+  const [currentId, setCurrentId] = useState('');
 
   async function addOrEditTutorial(tutorialObject) {
-    console.log(tutorialObject)
-    await db.collection('tutorials').doc().set(tutorialObject);
-    toast('New tutorial added', {type: 'success'});
+    if (currentId === '') {
+      await db.collection('tutorials').doc().set(tutorialObject);
+      toast('New tutorial added', {type: 'success'});
+    } else {
+      await db.collection('tutorials').doc(currentId).update(tutorialObject);
+      toast('Tutorial updated', {type: 'info'});
+      setCurrentId('');
+    }
   }
 
   async function getTutorials() {
@@ -49,7 +55,7 @@ function Tutorials() {
 
   return (
     <div>
-      <TutorialForm addOrEditTutorial={addOrEditTutorial} />
+      <TutorialForm {...{addOrEditTutorial, currentId, tutorials}}/>
       <div className="tutorials">
         {tutorials.map(tutorial => {
           return (
@@ -64,6 +70,11 @@ function Tutorials() {
                 className='material-icons'
                 onClick={() => onDeleteTutorial(tutorial.id)}>
                   close
+              </i>
+              <i
+                className='material-icons'
+                onClick={() => setCurrentId(tutorial.id)}>
+                  create
               </i>
             </div>
           </div>
