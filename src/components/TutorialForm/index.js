@@ -1,9 +1,11 @@
 import React, {useState, useEffect} from 'react';
 
-import {db} from '../firebase';
+import {db} from '../../firebase';
+
+import './styles.css';
 
 function TutorialForm(props) {
-  const {addOrEditTutorial, currentId, tutorials} = props;
+  const {addOrEditTutorial, currentId} = props;
 
   const initialStateValues = {
     url: '',

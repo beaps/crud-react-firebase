@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {toast} from 'react-toastify';
 
-import TutorialForm from './TuturialForm';
+import TutorialForm from '../TutorialForm';
 
-import {db} from '../firebase';
+import {db} from '../../firebase';
 
 
 function Tutorials() {
@@ -12,13 +12,17 @@ function Tutorials() {
   const [currentId, setCurrentId] = useState('');
 
   async function addOrEditTutorial(tutorialObject) {
-    if (currentId === '') {
-      await db.collection('tutorials').doc().set(tutorialObject);
-      toast('New tutorial added', {type: 'success'});
-    } else {
-      await db.collection('tutorials').doc(currentId).update(tutorialObject);
-      toast('Tutorial updated', {type: 'info'});
-      setCurrentId('');
+    try {
+      if (currentId === '') {
+        await db.collection('tutorials').doc().set(tutorialObject);
+        toast('New tutorial added', {type: 'success'});
+      } else {
+        await db.collection('tutorials').doc(currentId).update(tutorialObject);
+        toast('Tutorial updated', {type: 'info'});
+        setCurrentId('');
+      }
+    } catch (error) {
+      console.error(error);
     }
   }
 
@@ -55,7 +59,7 @@ function Tutorials() {
 
   return (
     <div>
-      <TutorialForm {...{addOrEditTutorial, currentId, tutorials}}/>
+      <TutorialForm {...{addOrEditTutorial, currentId}}/>
       <div className="tutorials">
         {tutorials.map(tutorial => {
           return (
