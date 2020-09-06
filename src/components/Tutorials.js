@@ -24,6 +24,7 @@ function Tutorials() {
     //   docs.push({...doc.data(), id: doc.id});
     // });
 
+    // If you make a change, auto refresh -> onSnapshot
     db.collection('tutorials').onSnapshot(querySnapshot => {
       const docs = [];
       querySnapshot.forEach(doc => {
@@ -31,6 +32,13 @@ function Tutorials() {
       });
       setTutorials(docs);
     });
+  }
+
+  async function onDeleteTutorial(id) {
+    // Confirm you want to delete the tutorial
+    if (window.confirm('Are you sure you want to delete this tutorial?')) {
+      await db.collection('tutorials').doc(id).delete();
+    }
   }
 
   useEffect(() => {
@@ -49,6 +57,13 @@ function Tutorials() {
             <a href={tutorial.url} target='_blank' rel="noopener noreferrer">
               Go to the tutorial
             </a>
+            <div>
+              <i
+                className='material-icons'
+                onClick={() => onDeleteTutorial(tutorial.id)}>
+                  close
+              </i>
+            </div>
           </div>
           );
         })}
