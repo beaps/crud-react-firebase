@@ -5,6 +5,8 @@ import TutorialForm from '../TutorialForm';
 
 import {db} from '../../firebase';
 
+import './styles.css';
+
 
 function Tutorials() {
 
